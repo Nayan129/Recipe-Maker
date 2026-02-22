@@ -1,50 +1,58 @@
 import { nanoid } from "nanoid";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { recipeContext } from "../context/RecipeContext";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
-  const { register, handleSubmit } = useForm();
+  const { data, setData } = useContext(recipeContext);
+  const navigate = useNavigate();
+  const { register, handleSubmit, reset } = useForm();
 
-  const submitHandler = (data) => {
-    data.id = nanoid();
-    console.log(data);
+  const submitHandler = (recipe) => {
+    recipe.id = nanoid();
+    setData([...data, recipe]);
+    toast.success("New recipe created!");
+    reset();
+    navigate("/recipes");
   };
   return (
     <div>
       <form onSubmit={handleSubmit(submitHandler)}>
         <input
           className="border-b outline-0 p-2 block"
-          {...register("url")}
+          {...register("img")}
           type="url"
           placeholder="enter image url"
+          required
         />
-        <small className="text-red-400">
-          this is the error please fill this it's required
-        </small>
 
         <input
           className="border-b outline-0 p-2 block"
           {...register("title")}
           type="text"
           placeholder="recipe title"
+          required
         />
 
         <textarea
           className="border-b outline-0 p-2 block"
-          {...register("description")}
+          {...register("desc")}
           type="text"
           placeholder="enter description"
         />
 
         <textarea
           className="border-b outline-0 p-2 block"
-          {...register("ingredients")}
+          {...register("ingr")}
           type="text"
           placeholder="enter ingredients"
         />
 
         <textarea
           className="border-b outline-0 p-2 block"
-          {...register("instructions")}
+          {...register("inst")}
           type="text"
           placeholder="enter instructions"
         />
@@ -53,9 +61,10 @@ const Create = () => {
           className="border-b outline-0 p-2 block text-red-400"
           {...register("categories")}
         >
-          <option value="categary-1">healthy</option>
-          <option value="categary-1">veg</option>
-          <option value="categary-1">non-veg</option>
+          <option value="BreckFast">Breckfast</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Brunch">Brunch</option>
+          <option value="Dinner">Dinner</option>
         </select>
 
         <button className="bg-gray-950 mt-4 py-2 px-4 rounded cursor-pointer active:scale-90">
