@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const RecipeCard = ({ recipe }) => {
-  const { id, url, title, desc, chef, ingr, inst } = recipe;
+  const { id, img, title, desc, chef, ingr, inst } = recipe;
 
   return (
     <Link
@@ -10,7 +10,7 @@ const RecipeCard = ({ recipe }) => {
     >
       <img
         className="w-full h-[20vh] object-cover"
-        src={url}
+        src={img}
         alt="recipe image"
       />
       <h1 className="font-black mt-2">{title}</h1>

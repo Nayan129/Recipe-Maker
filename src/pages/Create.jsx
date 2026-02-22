@@ -33,7 +33,13 @@ const Create = () => {
           {...register("title")}
           type="text"
           placeholder="recipe title"
-          required
+        />
+
+        <input
+          className="border-b outline-0 p-2 block"
+          {...register("chef")}
+          type="text"
+          placeholder="chef"
         />
 
         <textarea
@@ -61,7 +67,7 @@ const Create = () => {
           className="border-b outline-0 p-2 block text-red-400"
           {...register("categories")}
         >
-          <option value="BreckFast">Breckfast</option>
+          <option value="BreakFast">Breakfast</option>
           <option value="Lunch">Lunch</option>
           <option value="Brunch">Brunch</option>
           <option value="Dinner">Dinner</option>

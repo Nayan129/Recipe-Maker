@@ -7,7 +7,7 @@ import DetailedRecipe from "../pages/DetailedRecipe";
 
 const MainRoutes = () => {
   return (
-    <div className="py-4 text-lg ">
+    <div className="py-3 text-lg">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
