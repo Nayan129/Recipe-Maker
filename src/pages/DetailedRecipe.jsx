@@ -26,13 +26,13 @@ const DetailedRecipe = () => {
   });
 
   // this is submitHandler to update recipe
-  const submitHandler = (recipe) => {
+  const updateHandler = (recipe) => {
     const index = data.findIndex((recipe) => params.id == recipe.id);
     const copydata = [...data];
     copydata[index] = { ...copydata[index], ...recipe };
     setData(copydata);
     toast.success("recipe updated!");
-    navigate("/recipes");
+    // navigate("/recipes");
   };
 
   // this is deleteHandler to delete recipe
@@ -60,7 +60,7 @@ const DetailedRecipe = () => {
 
       <div className="right w-1/2 p-2">
         <div>
-          <form className="w-1/2 p-2" onSubmit={handleSubmit(submitHandler)}>
+          <form className="w-1/2 p-2" onSubmit={handleSubmit(updateHandler)}>
             <input
               className="border-b outline-0 p-2 block"
               {...register("img")}
