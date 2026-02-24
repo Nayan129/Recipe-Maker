@@ -25,7 +25,7 @@ const DetailedRecipe = () => {
   });
 
   const updateHandler = (recipe) => {
-    const index = data.findIndex((recipe) => params.id == recipe.id);
+    const index = data.findIndex((recipe) => params.id === recipe.id);
     const copydata = [...data];
     copydata[index] = { ...copydata[index], ...recipe };
     setData(copydata);
@@ -34,7 +34,10 @@ const DetailedRecipe = () => {
   };
 
   const deleteHandler = () => {
-    const filterdata = data.filter((recipe) => recipe.id != params.id);
+    const fav = JSON.parse(localStorage.getItem("fav")) || [];
+    const updatedFav = fav.filter((item) => item.id !== params.id);
+    localStorage.setItem("fav", JSON.stringify(updatedFav));
+    const filterdata = data.filter((recipe) => recipe.id !== params.id);
     setData(filterdata);
     localStorage.setItem("recipes", JSON.stringify(filterdata));
     toast.success("Recipe deleted!");
@@ -50,12 +53,12 @@ const DetailedRecipe = () => {
 
           <img
             loading="lazy"
-            className="w-full h-44 object-cover rounded-lg mb-3"
+            className="w-full max-h-80 object-cover rounded-lg mb-3 "
             src={recipe.img}
             alt=""
           />
 
-          <p className="text-xs text-red-400 mb-3 font-medium">
+          <p className="text-md text-red-400 mb-3 font-medium">
             By {recipe.chef}
           </p>
 
@@ -63,37 +66,34 @@ const DetailedRecipe = () => {
             <h3 className="text-sm font-semibold mb-1 text-blue-400 uppercase tracking-wide">
               Description
             </h3>
-            <p className="text-gray-300 text-xs leading-relaxed">
+            <p className="text-gray-300 text-sm leading-relaxed">
               {recipe.desc.slice(0, 250)}...
             </p>
           </div>
-
 
           <div className="mb-4">
             <h3 className="text-sm font-semibold mb-1 text-blue-400 uppercase tracking-wide">
               Ingredients
             </h3>
-            <p className="text-gray-300 text-xs leading-relaxed">
+            <p className="text-gray-300 text-sm leading-relaxed">
               {recipe.ingr.slice(0, 250)}...
             </p>
           </div>
-
 
           <div className="mb-4">
             <h3 className="text-sm font-semibold mb-1 text-blue-400 uppercase tracking-wide">
               Instructions
             </h3>
-            <p className="text-gray-300 text-xs leading-relaxed">
+            <p className="text-gray-300 text-sm leading-relaxed">
               {recipe.inst.slice(0, 250)}...
             </p>
           </div>
           <div className="mt-4">
-            <span className="inline-block bg-blue-500/20 text-blue-400 text-[10px] px-3 py-1 rounded-full border border-blue-500/30">
+            <span className="inline-block bg-blue-500/20 text-blue-400 text-[12px] px-3 py-1 rounded-full border border-blue-500/30">
               {recipe.categories}
             </span>
           </div>
         </div>
-
 
         {/* ..........right section.............. */}
         <div className="bg-gray-800 border border-gray-700 rounded-xl p-5 shadow-sm">

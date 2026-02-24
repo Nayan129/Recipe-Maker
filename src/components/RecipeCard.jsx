@@ -40,7 +40,7 @@ const RecipeCard = ({ recipe }) => {
           className="absolute bottom-[2%] right-[5%] ri-poker-hearts-line text-2xl"
         ></i>
       )}
-      <Link to={`/recipes/details/${id}`}>
+      <div>
         <img
           className="w-full h-56 object-cover  group-hover:scale-105 p-2 rounded-2xl transition duration-300"
           src={img}
@@ -50,9 +50,14 @@ const RecipeCard = ({ recipe }) => {
         <small className="px-4 text-sm text-gray-400">{chef}</small>
         <p className="px-2 pb-3">
           {desc.slice(0, 100)}...{" "}
-          <small className="px-4 pb-5 text-gray-300 text-sm">more</small>
+          <Link
+            className="px-4 pb-5 text-blue-500 text-md"
+            to={`/recipes/details/${id}`}
+          >
+            more
+          </Link>
         </p>
-      </Link>
+      </div>
     </div>
   );
 };
