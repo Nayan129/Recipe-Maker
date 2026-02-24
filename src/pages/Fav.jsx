@@ -1,9 +1,5 @@
-import React from 'react'
-
 const Fav = () => {
-  return (
-    <div>Fav</div>
-  )
-}
+  return <></>;
+};
 
-export default Fav
+export default Fav;
