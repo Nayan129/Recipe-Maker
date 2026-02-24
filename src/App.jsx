@@ -3,7 +3,7 @@ import "./index.css";
 import MainRoutes from "./routes/MainRoutes";
 const App = () => {
   return (
-    <div className="bg-gray-900 min-h-screen w-screen text-white py-5 px-[15%]">
+    <div className="min-h-screen w-full bg-linear-to-br from-gray-950 via-gray-900 to-gray-950 text-gray-100 px-6 md:px-16 py-4 ">
       <Navbar />
       <MainRoutes />
     </div>

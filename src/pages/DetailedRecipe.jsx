@@ -7,104 +7,143 @@ import { toast } from "react-toastify";
 const DetailedRecipe = () => {
   const { data, setData } = useContext(recipeContext);
 
-  // params to get particular data
   const params = useParams();
   const recipe = data.find((recipe) => params.id == recipe.id);
 
   const navigate = useNavigate();
 
-  const { register, handleSubmit, reset } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
-      img: recipe.img,
-      title: recipe.title,
-      chef: recipe.chef,
-      desc: recipe.desc,
-      ingr: recipe.ingr,
-      inst: recipe.inst,
-      category: recipe.category,
+      img: recipe?.img,
+      title: recipe?.title,
+      chef: recipe?.chef,
+      desc: recipe?.desc,
+      ingr: recipe?.ingr,
+      inst: recipe?.inst,
+      category: recipe?.category,
     },
   });
 
-  // this is submitHandler to update recipe
   const updateHandler = (recipe) => {
     const index = data.findIndex((recipe) => params.id == recipe.id);
     const copydata = [...data];
     copydata[index] = { ...copydata[index], ...recipe };
     setData(copydata);
-    toast.success("recipe updated!");
-    // navigate("/recipes");
+    localStorage.setItem("recipes", JSON.stringify(copydata));
+    toast.success("Recipe updated!");
   };
 
-  // this is deleteHandler to delete recipe
   const deleteHandler = () => {
     const filterdata = data.filter((recipe) => recipe.id != params.id);
     setData(filterdata);
+    localStorage.setItem("recipes", JSON.stringify(filterdata));
     toast.success("Recipe deleted!");
     navigate("/recipes");
   };
 
   return recipe ? (
-    <div className="w-full flex">
-      {/* this div is for rendering our single recipe data after click on recipe */}
-      <div className="left w-1/2 p-2">
-        <div className="text-5xl">{recipe.title}</div>
-        <img className="h-[20vh]" src={recipe.img} alt="" />
-        <small className="px-2 text-red-400">{recipe.chef}</small>
-        <p className="px-2 pb-3">
-          {recipe.desc.slice(0, 100)}...{" "}
-          <small className="text-blue-400">more</small>
-        </p>
-      </div>
+    <div className="max-w-6xl mx-auto mt-6 px-4">
+      <div className="grid lg:grid-cols-2 gap-8">
+        {/* left section for single recipe display  */}
+        <div className="bg-gray-800 border border-gray-700 rounded-xl p-5 shadow-sm">
+          <h1 className="text-2xl font-semibold mb-3">{recipe.title}</h1>
 
-      {/* this is right div for updating Recipe */}
+          <img
+            loading="lazy"
+            className="w-full h-44 object-cover rounded-lg mb-3"
+            src={recipe.img}
+            alt=""
+          />
 
-      <div className="right w-1/2 p-2">
-        <div>
-          <form className="w-1/2 p-2" onSubmit={handleSubmit(updateHandler)}>
+          <p className="text-xs text-red-400 mb-3 font-medium">
+            By {recipe.chef}
+          </p>
+
+          <div className="mb-4">
+            <h3 className="text-sm font-semibold mb-1 text-blue-400 uppercase tracking-wide">
+              Description
+            </h3>
+            <p className="text-gray-300 text-xs leading-relaxed">
+              {recipe.desc.slice(0, 250)}...
+            </p>
+          </div>
+
+
+          <div className="mb-4">
+            <h3 className="text-sm font-semibold mb-1 text-blue-400 uppercase tracking-wide">
+              Ingredients
+            </h3>
+            <p className="text-gray-300 text-xs leading-relaxed">
+              {recipe.ingr.slice(0, 250)}...
+            </p>
+          </div>
+
+
+          <div className="mb-4">
+            <h3 className="text-sm font-semibold mb-1 text-blue-400 uppercase tracking-wide">
+              Instructions
+            </h3>
+            <p className="text-gray-300 text-xs leading-relaxed">
+              {recipe.inst.slice(0, 250)}...
+            </p>
+          </div>
+          <div className="mt-4">
+            <span className="inline-block bg-blue-500/20 text-blue-400 text-[10px] px-3 py-1 rounded-full border border-blue-500/30">
+              {recipe.categories}
+            </span>
+          </div>
+        </div>
+
+
+        {/* ..........right section.............. */}
+        <div className="bg-gray-800 border border-gray-700 rounded-xl p-5 shadow-sm">
+          <h2 className="text-lg font-semibold mb-4">Update Recipe</h2>
+
+          <form className="space-y-4" onSubmit={handleSubmit(updateHandler)}>
             <input
-              className="border-b outline-0 p-2 block"
+              className="w-full bg-transparent border border-white/10 focus:border-red-400 focus:ring-1 focus:ring-red-400/40 rounded-lg px-3 py-2 outline-none text-sm"
               {...register("img")}
               type="url"
-              placeholder="enter image url"
+              placeholder="Enter image url"
             />
 
             <input
-              className="border-b outline-0 p-2 block"
+              className="w-full bg-transparent border border-white/10 focus:border-red-400 focus:ring-1 focus:ring-red-400/40 rounded-lg px-3 py-2 outline-none text-sm"
               {...register("title")}
               type="text"
-              placeholder="recipe title"
+              placeholder="Recipe title"
             />
 
             <input
-              className="border-b outline-0 p-2 block"
+              className="w-full bg-transparent border border-white/10 focus:border-red-400 focus:ring-1 focus:ring-red-400/40 rounded-lg px-3 py-2 outline-none text-sm"
               {...register("chef")}
               type="text"
-              placeholder="chef"
+              placeholder="Chef name"
             />
 
             <textarea
-              className="recipe border-b outline-0 p-2 block"
+              rows="2"
+              className="recipe w-full bg-transparent border border-white/10 focus:border-red-400 focus:ring-1 focus:ring-red-400/40 rounded-lg px-3 py-2 outline-none resize-none text-sm"
               {...register("desc")}
-              type="text"
-              placeholder="enter description"
+              placeholder="Enter description"
             />
 
             <textarea
-              className="recipe border-b outline-0 p-2 block"
+              rows="2"
+              className="recipe w-full bg-transparent border border-white/10 focus:border-red-400 focus:ring-1 focus:ring-red-400/40 rounded-lg px-3 py-2 outline-none resize-none text-sm"
               {...register("ingr")}
-              type="text"
-              placeholder="enter ingredients"
+              placeholder="Enter ingredients"
             />
 
             <textarea
-              className="recipe border-b outline-0 p-2 block"
+              rows="2"
+              className="recipe w-full bg-transparent border border-white/10 focus:border-red-400 focus:ring-1 focus:ring-red-400/40 rounded-lg px-3 py-2 outline-none resize-none text-sm"
               {...register("inst")}
-              type="text"
-              placeholder="enter instructions"
+              placeholder="Enter instructions"
             />
 
             <select
-              className="border-b outline-0 p-2 block text-red-400"
+              className="w-full bg-transparent border border-white/10 focus:border-red-400 focus:ring-1 focus:ring-red-400/40 rounded-lg px-3 py-2 outline-none text-gray-300 text-sm"
               {...register("categories")}
             >
               <option value="BreakFast">Breakfast</option>
@@ -113,21 +152,27 @@ const DetailedRecipe = () => {
               <option value="Dinner">Dinner</option>
             </select>
 
-            <button className="bg-green-700 mt-4 py-2 px-4 rounded cursor-pointer active:scale-90">
-              update Recipe
-            </button>
-            <button
-              onClick={deleteHandler}
-              className="bg-red-500 mt-4 py-2 px-4 rounded cursor-pointer active:scale-90"
-            >
-              Delete Recipe
-            </button>
+            <div className="flex gap-3 pt-3">
+              <button className="flex-1 bg-green-600 hover:bg-green-700 py-2 rounded-lg text-sm font-medium">
+                Update
+              </button>
+
+              <button
+                type="button"
+                onClick={deleteHandler}
+                className="flex-1 bg-red-600 hover:bg-red-700 py-2 rounded-lg text-sm font-medium"
+              >
+                Delete
+              </button>
+            </div>
           </form>
         </div>
       </div>
     </div>
   ) : (
-    "Loading..."
+    <div className="text-center py-10 text-gray-400 text-sm">
+      Loading recipe...
+    </div>
   );
 };
 

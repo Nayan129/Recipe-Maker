@@ -12,16 +12,19 @@ const Create = () => {
 
   const submitHandler = (recipe) => {
     recipe.id = nanoid();
-    setData([...data, recipe]);
+    const copyData = [...data];
+    copyData.push(recipe);
+    setData(copyData);
+    localStorage.setItem("recipes", JSON.stringify(copyData));
     toast.success("New recipe created!");
     reset();
     navigate("/recipes");
   };
   return (
-    <div>
+    <div className="max-w-2xl mx-auto mt-12 bg-white/5 border border-white/10 p-8 rounded-2xl shadow-md">
       <form onSubmit={handleSubmit(submitHandler)}>
         <input
-          className="border-b outline-0 p-2 block"
+          className="w-full bg-transparent border border-white/10 focus:border-red-400 focus:ring-1 focus:ring-red-400 rounded-lg px-4 py-2 mb-4 outline-none"
           {...register("img")}
           type="url"
           placeholder="enter image url"
@@ -29,42 +32,42 @@ const Create = () => {
         />
 
         <input
-          className="border-b outline-0 p-2 block"
+          className="w-full bg-transparent border border-white/10 focus:border-red-400 focus:ring-1 focus:ring-red-400 rounded-lg px-4 py-2 mb-4 outline-none"
           {...register("title")}
           type="text"
           placeholder="recipe title"
         />
 
         <input
-          className="border-b outline-0 p-2 block"
+          className="w-full bg-transparent border border-white/10 focus:border-red-400 focus:ring-1 focus:ring-red-400 rounded-lg px-4 py-2 mb-4 outline-none"
           {...register("chef")}
           type="text"
           placeholder="chef"
         />
 
         <textarea
-          className="border-b outline-0 p-2 block"
+          className="recipe w-full bg-transparent border border-white/10 focus:border-red-400 focus:ring-1 focus:ring-red-400 rounded-lg px-4 py-2 mb-4 outline-none resize-none"
           {...register("desc")}
           type="text"
           placeholder="enter description"
         />
 
         <textarea
-          className="border-b outline-0 p-2 block"
+          className="recipe w-full bg-transparent border border-white/10 focus:border-red-400 focus:ring-1 focus:ring-red-400 rounded-lg px-4 py-2 mb-4 outline-none resize-none"
           {...register("ingr")}
           type="text"
           placeholder="enter ingredients"
         />
 
         <textarea
-          className="border-b outline-0 p-2 block"
+          className="recipe w-full bg-transparent border border-white/10 focus:border-red-400 focus:ring-1 focus:ring-red-400 rounded-lg px-4 py-2 mb-4 outline-none resize-none"
           {...register("inst")}
           type="text"
           placeholder="enter instructions"
         />
 
         <select
-          className="border-b outline-0 p-2 block text-red-400"
+          className="w-full bg-transparent border border-white/10 rounded-lg px-4 py-2 mb-4 text-gray-300 focus:border-red-400 outline-none"
           {...register("categories")}
         >
           <option value="BreakFast">Breakfast</option>
@@ -73,7 +76,7 @@ const Create = () => {
           <option value="Dinner">Dinner</option>
         </select>
 
-        <button className="bg-gray-950 mt-4 py-2 px-4 rounded cursor-pointer active:scale-90">
+        <button className="w-full bg-red-500 hover:bg-red-600 py-3 rounded-xl font-semibold shadow-md">
           Save Recipe
         </button>
       </form>
