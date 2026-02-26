@@ -1,4 +1,16 @@
 const Home = () => {
+  const [recipes, setRecipes] = useState([]);
+
+  async function fetchApi() {
+    const response = await axios.get("https://dummyjson.com/recipes/1");
+    console.log(response.data.recipes);
+    const data = response.data.recipes;
+    setRecipes(data);
+  }
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
 
   return (
     <div className="border rounded-lg h-115">
