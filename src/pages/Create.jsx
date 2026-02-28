@@ -20,6 +20,7 @@ const Create = () => {
     reset();
     navigate("/recipes");
   };
+  
   return (
     <div className="max-w-2xl mx-auto mt-12 bg-white/5 border border-white/10 p-8 rounded-2xl shadow-md">
       <form onSubmit={handleSubmit(submitHandler)}>

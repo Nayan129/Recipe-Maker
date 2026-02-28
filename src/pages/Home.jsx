@@ -4,10 +4,32 @@ import { useEffect, useState } from "react";
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
 
+  // const [favourites, setFavourites] = useState(() => {
+  //   return JSON.parse(localStorage.getItem("fav")) || [];
+  // });
+
+  // const isFavourite = favourites.some((fav) => fav.id == id);
+
+  // const favHandler = () => {
+  //   if (!isFavourite) {
+  //     let updateFav = [...favourites, recipe];
+  //     setFavourites(updateFav);
+  //     localStorage.setItem("fav", JSON.stringify(updateFav));
+  //     toast.success("add to favourite ");
+  //   }
+  // };
+  // const unFavHandler = () => {
+  //   if (isFavourite) {
+  //     const filterFav = favourites.filter((fav) => fav.id !== id);
+  //     setFavourites(filterFav);
+  //     localStorage.setItem("fav", JSON.stringify(filterFav));
+  //   }
+  // };
+
   async function fetchApi() {
     const response = await axios.get("https://dummyjson.com/recipes");
     console.log(response.data.recipes);
-    const data = response.data.recipes;
+    const data = await response.data.recipes;
     setRecipes(data);
   }
 
@@ -30,6 +52,21 @@ const Home = () => {
 
       {/* Recipes map here*/}
       <div className="pt-24 h-full overflow-y-auto">
+
+        
+        {/* {favourites.find((fav) => fav.id == recipe.id) ? (
+          <i
+            onClick={unFavHandler}
+            className="absolute bottom-[2%] right-[5%] ri-poker-hearts-fill text-2xl"
+          ></i>
+        ) : (
+          <i
+            onClick={favHandler}
+            className="absolute bottom-[2%] right-[5%] ri-poker-hearts-line text-2xl"
+          ></i>
+        )} */}
+
+
         <div className="recipe-wrapper flex w-full flex-wrap gap-5 py-2 justify-center">
           {recipes?.map((recipe) => {
             return (

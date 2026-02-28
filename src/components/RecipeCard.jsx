@@ -1,31 +1,8 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+
 
 const RecipeCard = ({ recipe }) => {
   const { id, img, title, desc, chef, ingr, inst } = recipe;
-
-  const [favourites, setFavourites] = useState(() => {
-    return JSON.parse(localStorage.getItem("fav")) || [];
-  });
-
-  const isFavourite = favourites.some((fav) => fav.id == id);
-
-  const favHandler = () => {
-    if (!isFavourite) {
-      let updateFav = [...favourites, recipe];
-      setFavourites(updateFav);
-      localStorage.setItem("fav", JSON.stringify(updateFav));
-      toast.success("add to favourite ");
-    }
-  };
-  const unFavHandler = () => {
-    if (isFavourite) {
-      const filterFav = favourites.filter((fav) => fav.id !== id);
-      setFavourites(filterFav);
-      localStorage.setItem("fav", JSON.stringify(filterFav));
-    }
-  };
 
   return (
     <div className="relative group bg-white/5  border border-white/10 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition p-2">
