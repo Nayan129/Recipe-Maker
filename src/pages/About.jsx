@@ -6,7 +6,7 @@ const About = () => {
       <div className="max-w-4xl mx-auto space-y-12">
         {/* This is About Recipe And All Info Page*/}
         <section>
-          <h1 className="text-4xl font-bold mb-4">About RecipeFlow</h1>
+          <h1 className="text-4xl font-bold mb-4">About CookStacker</h1>
           <p className="text-slate-400 leading-relaxed text-lg">
             Recipe Explorer is a modern React-based application that allows
             users to discover, search, and save their favorite recipes in a
