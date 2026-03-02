@@ -80,7 +80,9 @@ const Home = () => {
                     <img
                       src={recipe.img}
                       alt={recipe.title}
-                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      onLoad={(e) => e.target.classList.remove("opacity-0")}
+                      className="w-full h-full object-cover opacity-0"
                     />
                   </div>
 
